@@ -1,6 +1,6 @@
 # Cadence · Interactive 15th Aug Showcase
 
-> 🌐 **Live Experience:** [https://suv4m.github.io/Ind-day/](https://suv4m.github.io/Ind-day/)
+>🌐 [https://suv4m.github.io/Ind-day/](https://suv4m.github.io/Ind-day/)
 
 An interactive, scroll-driven visual story celebrating the 80th Independence Day (15 August 2026) at **VSSUT Burla** and the **3 (O) BN NCC** battalion headquarters.
 
