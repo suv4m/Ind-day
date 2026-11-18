@@ -1,0 +1,36 @@
+# ==============================================================================
+# Git Ignore Configuration - 3 (O) BN NCC Burla Showcase
+# ==============================================================================
+
+# ── SENSITIVE CREDENTIALS & TOKENS (NEVER COMMIT) ─────────────────────────────
+**/credentials.json
+**/token.json
+*.env
+*.env.*
+*.pem
+*.key
+*.p12
+
+# ── PYTHON BYTECODE & CACHES ──────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# ── OPERATING SYSTEM & EDITOR ARTIFACTS ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+ehthumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── TEMPORARY & BACKUP ARTIFACTS ──────────────────────────────────────────────
+*.bak
+*.tmp
+*.log
