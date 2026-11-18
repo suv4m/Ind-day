@@ -88,10 +88,12 @@ The script will assemble the HTML and check its cryptographic SHA-256 hash to en
 
 ---
 
-## Deployment
+## Deployment & Embedding
 
 * **GitHub Pages:** Push to GitHub, go to **Settings → Pages**, and choose **Deploy from branch (`main` / root)**.
-* **Google Sites:** Open your Google Site editor, choose **Insert → Embed → Embed Code**, and paste the contents of `index.html`.
+* **Google Sites:** Open your Google Site editor, choose **Insert → Embed → Embed Code**, and paste the contents of `index.html` (or embed by URL).
+
+**Note on the "Full site" button:** this showcase is primarily designed to be embedded inside the official NCC VSSUT Burla Google Site. Opens the full-screen experience in a new browser tab for viewers inside the embedded iframe.
 
 ---
 
