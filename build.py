@@ -511,7 +511,7 @@ BODY_PART = (
   <nav class="lk"><a href="#" data-n="fall" data-k="hon">Honours</a><a href="#" data-n="cmd" data-k="cmd">Commanders</a><a href="#" data-n="troops" data-k="sw sd rifle drum sec">Troops</a><a href="#" data-n="march" data-k="march">March past</a><a href="#" data-n="speech" data-k="speech">Voices</a><a href="#" data-n="tri" data-k="tri">Tiranga</a><a href="#" data-n="unit" data-k="unit">Unit</a><a href="#" data-n="gal" data-k="gal">Gallery</a></nav>
   <div id="nav-actions" style="display:flex;align-items:center;gap:8px;">
   <button id="snd" class="mag" aria-pressed="false" aria-label="Sound"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><g class="w"><path d="M16.5 8.5a5 5 0 010 7"/><path d="M19 6a8.5 8.5 0 010 12"/></g><g class="x"><path d="M16.5 9.5l5 5M21.5 9.5l-5 5"/></g></svg></button>
-  <a href="https://indday.netlify.app" target="_blank" rel="noopener noreferrer" id="pop-out" class="mag" title="Open in Full Screen">
+  <a href="https://suv4m.github.io/Ind-day/" target="_blank" rel="noopener noreferrer" id="pop-out" class="mag" title="Open in Full Screen">
     <span class="fs-full">Full site <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
     <span class="fs-short"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
   </a>
@@ -1386,8 +1386,8 @@ TAIL_PART = (
 )
 
 
-EXPECTED_SHA256 = "47a70980c96dfbae1cd48e48449a657b694f0fba27668efe3fc2f2b032c58aee"
-EXPECTED_BYTES = 65541
+EXPECTED_SHA256 = "d3e39bb7fa2015f3b0994f8ccc4fe9429612765105ec3e0585e9640c9e99f04c"
+EXPECTED_BYTES = 65547
 
 def build(output_path: str = "index.html") -> str:
     """Builds the complete single-page website and verifies output integrity."""
