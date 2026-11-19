@@ -461,6 +461,16 @@ html,body{overflow-x:clip!important;touch-action:pan-y}#stage{touch-action:pan-y
 }
 #anthem .cap { bottom: 8vh !important; }
 .vload{position:absolute;left:50%;bottom:12vh;translate:-50% 0;z-index:7;padding:8px 16px 10px;border-radius:99px;background:rgba(5,6,8,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font:500 11px var(--m);color:#fff;pointer-events:none;overflow:hidden;white-space:nowrap}.vload i{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--sf);transform-origin:left;transform:scaleX(0)}
+
+#menu-btn{display:none;width:36px;height:36px;border:1px solid rgba(255,255,255,.28);border-radius:99px;place-items:center;color:inherit}
+@media (max-width:760px){
+  #menu-btn{display:grid}
+  #nav .lk,#nav.min .lk,#nav.min.exp .lk,#nav.min:hover .lk{display:flex;flex-direction:column;gap:2px;position:absolute;top:calc(100% + 8px);left:0;right:0;width:auto;max-width:none;padding:10px 8px;border-radius:20px;background:rgba(5,6,8,.94);border:1px solid rgba(255,255,255,.12);opacity:0;pointer-events:none;overflow:visible;transform:translateY(-6px);transition:opacity .25s,transform .25s}
+  #nav.menu .lk,#nav.menu.min .lk,#nav.menu.min.exp .lk{opacity:1;pointer-events:auto;transform:none}
+  #nav .lk a{padding:12px 14px;font-size:15px;opacity:1}
+  #pop-out .fs-full{display:none!important}
+  #pop-out .fs-short{display:inline-flex!important}
+}
 </style>
 </head>
 <body tabindex="0">
@@ -487,6 +497,7 @@ html,body{overflow-x:clip!important;touch-action:pan-y}#stage{touch-action:pan-y
   </a>
   <nav class="lk"><a href="#" data-n="fall" data-k="hon">Honours</a><a href="#" data-n="cmd" data-k="cmd">Commanders</a><a href="#" data-n="troops" data-k="sw sd rifle drum sec">Troops</a><a href="#" data-n="march" data-k="march">March past</a><a href="#" data-n="speech" data-k="speech">Voices</a><a href="#" data-n="tri" data-k="tri">Tiranga</a><a href="#" data-n="unit" data-k="unit">Unit</a><a href="#" data-n="gal" data-k="gal">Gallery</a></nav>
   <div id="nav-actions" style="display:flex;align-items:center;gap:8px;">
+  <button id="menu-btn" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   <button id="snd" class="mag" aria-pressed="false" aria-label="Sound"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><g class="w"><path d="M16.5 8.5a5 5 0 010 7"/><path d="M19 6a8.5 8.5 0 010 12"/></g><g class="x"><path d="M16.5 9.5l5 5M21.5 9.5l-5 5"/></g></svg></button>
   <a href="https://suv4m.github.io/Ind-day/" target="_blank" rel="noopener noreferrer" id="pop-out" class="mag" title="Open in Full Screen">
     <span class="fs-full">Full site <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
@@ -1211,11 +1222,39 @@ if(window.Lenis && !RM && !matchMedia("(pointer:coarse)").matches) {
   gsap.ticker.add(time => L.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 }
-const go=n=>{const y=J[n]/T*(document.documentElement.scrollHeight-innerHeight);L?L.scrollTo(y,{duration:2.4}):scrollTo({top:y,behavior:'smooth'})};
+let goRaf=0;
+const tweenTo=(a,b)=>{cancelAnimationFrame(goRaf);const t0=performance.now(),d=1800;
+  const step=t=>{const k=Math.min(1,(t-t0)/d),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;scrollTo({left:0,top:a+(b-a)*e,behavior:'instant'});if(k<1)goRaf=requestAnimationFrame(step)};
+  goRaf=requestAnimationFrame(step)};
+const go=n=>{
+  const y=J[n]/T*(document.documentElement.scrollHeight-innerHeight),y0=scrollY;
+  if(L)L.scrollTo(y,{duration:2.4,force:true});else tweenTo(y0,y);
+  /* safety net for embeds: if nothing moved, drive the scroll ourselves */
+  setTimeout(()=>{if(Math.abs(y-y0)>2&&Math.abs(scrollY-y0)<2)tweenTo(y0,y)},400)};
+['wheel','touchstart'].forEach(ev=>addEventListener(ev,()=>cancelAnimationFrame(goRaf),{passive:true}));
 $$('[data-n]').forEach(a=>a.onclick=e=>{e.preventDefault();go(a.dataset.n)});
 const nav = $('#nav');
 let openTimer = null;
 let closeTimer = null;
+/* phones: menu button opens the section list */
+const mbtn = $('#menu-btn');
+const setMenu = on => { nav.classList.toggle('menu', on); mbtn.setAttribute('aria-expanded', on); };
+mbtn.addEventListener('click', e => { e.stopPropagation(); setMenu(!nav.classList.contains('menu')); });
+$$('.lk a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('click', e => { if (!e.target.closest('#nav')) setMenu(false); });
+/* tap support: touch screens and embeds have no hover */
+nav.addEventListener('click', e => {
+  if (e.target.closest('#nav-actions')) return;
+  if (nav.classList.contains('min') && !nav.classList.contains('exp')) nav.classList.add('exp');
+  if (nav.classList.contains('exp')) { clearTimeout(closeTimer); closeTimer = setTimeout(() => nav.classList.remove('exp'), 4500); }
+});
+/* Full site: open a new tab; if the embed blocks pop-ups, leave the frame instead */
+$('#pop-out').addEventListener('click', e => {
+  e.preventDefault();
+  const url = e.currentTarget.href, w = window.open(url, '_blank');
+  if (w) w.opener = null;
+  else { try { window.top.location.href = url; } catch (_) { location.href = url; } }
+});
 
 addEventListener('scroll', () => {
   nav.classList.toggle('min', scrollY > 90);
